@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # we use this to get api key from env files
 load_dotenv()
 Dev_Token = os.getenv('Dev_Token')
-
+Feed_Url = os.getenv('Feed_Url')
 '''
 💡Use this version if you deploying it on repl.it
 # Getiing bot token from env file
@@ -17,7 +17,39 @@ Dev_Token = os.environ['Dev_Token']
 '''
 
 
+def get_feed(feedUrl):
+    url = Feed_Url
+    data = {"url": feedUrl}
+    res = requests.post(
+        url, headers={'content-type': 'application/json'}, json=data)
+
+    content = res.json()
+    # only take the title and url from the content
+    titles = [i.get("title") for i in content]
+    urls = [i.get("url") for i in content]
+    # remove any \n from beginning and end of the url
+    titles = [i.replace('\n', '') for i in titles]
+    urls = [url.strip('\n') for url in urls]
+    # combining the both arrays as a dictionary
+    devto = dict(zip(titles, urls))
+    dev = list(devto.items())
+    all_articles = []
+    for title, url in dev:
+        # getting index number
+        num = f"{dev.index((title, url))+1}"
+        # adding the index number to the title
+        # articles = num+". "+'<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n'
+        markDownArticles = f"{num}. [{title}]({url})\n"
+        # adding the articles to the list
+        all_articles.append(markDownArticles)
+
+    articles = '\n'.join(all_articles)
+    print("Feed Sent Sent Succesfully 🚀")
+    return articles
+
 # Getting TLDR articales
+
+
 def currentDate():
     date = datetime.datetime.now()
     date = date.strftime("%Y-%m-%d")
@@ -97,9 +129,6 @@ def devtoTop():
     return ("Devto Top Articles 💻\n\n"+articles)
 
 
-# Getting latest articles from devto
-
-
 def devtoLatest():
     latest = "https://dev.to/api/articles/latest"
     latestRes = requests.get(latest, headers={"Api-Key": Dev_Token})
@@ -132,7 +161,7 @@ def devtoLatest():
 def get_medium(params: str):
     url = 'https://medium.com/tag/' + params
     res = requests.get(url, headers={
-                       "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'})
+        "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'})
     # print(res.status_code)
     soup = BeautifulSoup(res.text, 'html.parser')
     all_articles = []

@@ -1,6 +1,6 @@
 import os
 import logging
-from scraper import devtoTop, devtoLatest, get_cssTricks, get_echojs, get_sidebar, get_theVerge, get_tldr, get_medium, get_techcrunch, get_hackerNews,get_productHunt, get_wired,get_theNextWeb
+from scraper import get_feed, devtoTop, devtoLatest, get_cssTricks, get_echojs, get_sidebar, get_theVerge, get_tldr, get_medium, get_techcrunch, get_hackerNews, get_productHunt, get_wired, get_theNextWeb
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 import responses
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, CallbackContext
@@ -106,55 +106,71 @@ def medium(update, context):
 
 
 def techCrunch(update, context):
-    data = get_techcrunch()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://techcrunch.com/feed/')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # HackerNews
+
+
 def hackerNews(update, context):
-    data= get_hackerNews()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
-   
+    data = get_feed('https://news.ycombinator.com/rss')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 
-# Getting the The Verge Articles 
+# Getting the The Verge Articles
 def theVerge(update, context):
-    data = get_theVerge()
-    # image = 'https://res.cloudinary.com/amrohan/image/upload/v1652082310/Images/j7ucvnveenztipaztfo1.png'
-    # # send image to user
-    # update.message.reply_photo(photo=image)
-    # parsing the data as html and sending it to user
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://www.theverge.com/rss/index.xml')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # Getting the producthunt articles
-def productHunt(update, context):
-    data = get_productHunt()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
 
-# Getting all wired articles 
+
+def productHunt(update, context):
+    data = get_feed('https://www.producthunt.com/feed')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
+
+# Getting all wired articles
+
+
 def wired(update, context):
-    data = get_wired()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://www.wired.com/feed/')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 
 # Getting all sidebar
 def sidebar(update, context):
-    data = get_sidebar()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://sidebar.io/feed.xml')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # css tricks
+
+
 def cssTricks(update, context):
-    data = get_cssTricks()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://css-tricks.com/feed/')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # the next web
+
+
 def theNextWeb(update, context):
-    data = get_theNextWeb()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://thenextweb.com/feed/')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # Echo Js
+
+
 def echoJs(update, context):
-    data = get_echojs()
-    context.bot.send_message(chat_id=update.effective_chat.id,parse_mode="html",text=data)
+    data = get_feed('https://echojs.com/rss')
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, parse_mode="markdown", text=data)
 
 # there two methods to crete functions to get repond from bot this is 2nd one
 
@@ -192,10 +208,10 @@ def button(update: Update, context: CallbackContext) -> None:
     # Now we can use context.bot, context.args and query.message
     if query.data == 'topArticles':
         data = devtoTop()
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'latestArticles':
         data = devtoLatest()
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'tech':
         tech, science, programming, miscellaneous = get_tldr()
         query.edit_message_text(text=tech)
@@ -210,28 +226,28 @@ def button(update: Update, context: CallbackContext) -> None:
         query.edit_message_text(text=miscellaneous)
     elif query.data == 'med_Technology':
         data = get_medium('technology')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'med_AI':
         data = get_medium('artificial-intelligence')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'med_programming':
         data = get_medium('programming')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'med_datascience':
         data = get_medium('data-science')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'med_py':
         data = get_medium('python')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
     elif query.data == 'med_humor':
         data = get_medium('humor')
-        query.edit_message_text(parse_mode="html",text=data)
+        query.edit_message_text(parse_mode="html", text=data)
 
 
 # Run the programms from here
 if __name__ == '__main__':
 
-    APP_NAME='https://devnewsbot.herokuapp.com/'
+    APP_NAME = 'https://devnewsbot.herokuapp.com/'
     updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
 
@@ -282,8 +298,9 @@ if __name__ == '__main__':
     # Run the bot
     # Use polling command while local development or Use this command when you dont want to use webhooks
     # updater.start_polling(1.0)
-    
+
     # using webhook so that we can run the bot in heroku without having wasting of resources
-    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TOKEN, webhook_url= APP_NAME + TOKEN)
+    updater.start_webhook(listen="0.0.0.0", port=PORT,
+                          url_path=TOKEN, webhook_url=APP_NAME + TOKEN)
     # Idle state give bot time to go in idle
     updater.idle()
