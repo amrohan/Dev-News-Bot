@@ -77,21 +77,21 @@ def devtoTop():
     # only take the title from the data
     titles = [i.get("title") for i in data]
     urls = [i.get("url") for i in data]
-    # combining the both arrays as a dictionary 
+    # combining the both arrays as a dictionary
     devto = dict(zip(titles, urls))
     dev = list(devto.items())
-    all_articles= []
+    all_articles = []
     # looping over every title and url and then return ''<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n\n'\'
     # two methods to obtain same thing
-        # method 1
+    # method 1
     for title, url in dev:
         # getting index number
-        num =f"{dev.index((title, url))+1}"
+        num = f"{dev.index((title, url))+1}"
         # adding the index number to the title
         articles = num+". "+'<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n'
         # adding the articles to the list
         all_articles.append(articles)
-    
+
     articles = '\n'.join(all_articles)
     print("Devto Top Sent Succesfully 🚀")
     return ("Devto Top Articles 💻\n\n"+articles)
@@ -107,21 +107,21 @@ def devtoLatest():
     # only take the title from the data
     titles = [i.get("title") for i in data]
     urls = [i.get("url") for i in data]
-    # combining the both arrays as a dictionary 
+    # combining the both arrays as a dictionary
     devto = dict(zip(titles, urls))
     dev = list(devto.items())
-    all_articles= []
+    all_articles = []
     # looping over every title and url and then return ''<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n\n'\'
     # two methods to obtain same thing
-        # method 1
+    # method 1
     for title, url in dev:
         # getting index number
-        num =f"{dev.index((title, url))+1}"
+        num = f"{dev.index((title, url))+1}"
         # adding the index number to the title
         articles = num+". "+'<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n'
         # adding the articles to the list
         all_articles.append(articles)
-    
+
     articles = '\n'.join(all_articles)
     print("Devto Latest Sent Succesfully 🚀")
     return ("Devto Latest Articles 💻\n\n"+articles)
@@ -158,16 +158,15 @@ def get_medium(params: str):
     articlesArray = []
     for title, url in medArray:
         # getting index number
-        num =f"{medArray.index((title, url))+1}"
+        num = f"{medArray.index((title, url))+1}"
         # adding the index number to the title
         article = num+". "+'<a href='+'"' + url+'"'+'>'+title+'</a>'+'\n'
         # adding the articles to the list
-        articlesArray.append(article)  
+        articlesArray.append(article)
 
     articles = '\n'.join(articlesArray)
     print("Medium Sent Succesfully 🚀")
     return ("Medium "+params+" Articles 💻\n\n"+articles)
-
 
 
 # All the articles from TechCrunch
@@ -203,8 +202,9 @@ def get_techcrunch():
 
     articlesArray = []
     for i in range(article_count):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i][1]}'>{all_articles[i][0]}</a>\n")
-    
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i][1]}'>{all_articles[i][0]}</a>\n")
+
     techCrunchArticles = '\n'.join(articlesArray)
 
     print("Tech Crunch Articles sent successfully🚀")
@@ -221,11 +221,12 @@ def get_hackerNews():
         if data:
             all_articles.append(item.select('.titlelink')[0].get_text())
             all_articles.append(item.select('.titlelink')[0].get('href'))
-    
+
     articlesArray = []
-    for i in range(1,30):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
-    
+    for i in range(1, 30):
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+
     hackerNewsArticles = '\n'.join(articlesArray)
     print('Hackernews Articles sent successfully🚀')
     return("Hacker News Articles 💻\n\n"+hackerNewsArticles)
@@ -247,34 +248,37 @@ def get_theVerge():
 
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     theVergeArticles = '\n'.join(articlesArray)
     return("The Verge Articles 💻\n\n"+theVergeArticles)
 
 # Product Hunt Articles
+
+
 def get_productHunt():
     url = "https://www.producthunt.com/posts"
     user_Agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'
-    page = requests.get(url,headers={'User-Agent':user_Agent})
+    page = requests.get(url, headers={'User-Agent': user_Agent})
     soup = BeautifulSoup(page.content, 'html.parser')
     all_articles = []
     # finding all href tag and title tag via passing class
-    links=soup.find_all('a',class_='styles_title__hxNoA')
+    links = soup.find_all('a', class_='styles_title__jWi91')
     for link in links:
         all_articles.append(link.text)
         post = link.get('href')
-        url =  "https://www.producthunt.com"+post
+        url = "https://www.producthunt.com"+post
         all_articles.append(url)
-
 
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>")
-    
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>")
+
     # Getting Description
-    desc = soup.find_all('a',class_='styles_tagline__qrpWc')
-    descArray= [] 
+    desc = soup.find_all('a', class_='styles_tagline__j29pO')
+    descArray = []
     for desc in desc:
         descArray.append(desc.text)
 
@@ -288,6 +292,8 @@ def get_productHunt():
     return("Producthunt Articles 💻\n\n"+productHuntArticles)
 
 # Wired Articles
+
+
 def get_wired():
     url = "https://www.wired.com/"
     page = requests.get(url)
@@ -299,10 +305,11 @@ def get_wired():
         url = "https://www.wired.com"+href
         all_articles.append(title)
         all_articles.append(url)
-    
+
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     wiredArticles = '\n'.join(articlesArray)
     return("Wired Articles 💻\n\n"+wiredArticles)
@@ -322,7 +329,8 @@ def get_sidebar():
 
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     sidebarArticles = '\n'.join(articlesArray)
     print("sidebar Articles sent successfully🚀")
@@ -333,19 +341,21 @@ def get_sidebar():
 def get_cssTricks():
     url = "https://css-tricks.com/archives/"
     userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'
-    page = requests.get(url,headers={'User-Agent':userAgent})
+    page = requests.get(url, headers={'User-Agent': userAgent})
     soup = BeautifulSoup(page.content, 'html.parser')
     all_articles = []
     content = soup.find_all('h2')
     for articles in content:
-        title = articles.select_one('a').getText().strip() # Using strip to remove white space from the beginning and end
+        # Using strip to remove white space from the beginning and end
+        title = articles.select_one('a').getText().strip()
         url = articles.select_one('a').get('href')
         all_articles.append(title)
         all_articles.append(url)
 
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     cssTricksArticles = '\n'.join(articlesArray)
     print("cssTricks Articles sent successfully🚀")
@@ -356,21 +366,25 @@ def get_cssTricks():
 def get_theNextWeb():
     url = "https://thenextweb.com/"
     userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36'
-    page = requests.get(url,headers={'User-Agent':userAgent})
+    page = requests.get(url, headers={'User-Agent': userAgent})
     soup = BeautifulSoup(page.content, 'html.parser')
     all_articles = []
-    content = soup.find_all('li',class_='o-grid__col md:o-grid__col--1/2 lg:o-grid__col--1/4')
+    content = soup.find_all(
+        'li', class_='o-grid__col md:o-grid__col--1/2 lg:o-grid__col--1/4')
     for articles in content:
-        title = articles.find('h4',class_='text-s leading-snug sm:text-m sm:leading-normal').getText().strip()
+        title = articles.find(
+            'h4', class_='text-s leading-snug sm:text-m sm:leading-normal').getText().strip()
         # access the a tag using parent
-        href = articles.find('h4',class_='text-s leading-snug sm:text-m sm:leading-normal').parent.get('href')
+        href = articles.find(
+            'h4', class_='text-s leading-snug sm:text-m sm:leading-normal').parent.get('href')
         url = "https://thenextweb.com"+href
         all_articles.append(title)
         all_articles.append(url)
 
     articleArray = []
     for i in range(len(all_articles)//2):
-        articleArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articleArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     theNextWebArticles = '\n'.join(articleArray)
     print("The Next Web Articles sent successfully🚀")
@@ -383,7 +397,7 @@ def get_echojs():
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
     all_articles = []
-    content = soup.select('section',class_='newslist')
+    content = soup.select('section', class_='newslist')
     for articles in content:
         title = articles.find_all('h2')
         for article in title:
@@ -395,10 +409,9 @@ def get_echojs():
     # print(all_articles)
     articlesArray = []
     for i in range(len(all_articles)//2):
-        articlesArray.append(f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
+        articlesArray.append(
+            f"{i+1}. <a href='{all_articles[i*2+1]}'>{all_articles[i*2]}</a>\n")
 
     echojsArticles = '\n'.join(articlesArray)
     print("Echojs Articles sent successfully🚀")
     return("Echojs Articles 💻\n\n"+echojsArticles)
-
-
