@@ -7,7 +7,7 @@ A Telegram bot that gathers news from multiple sources in one location so you do
 15/05/2022
 
 bot has been updated to include the following:
-** Now it is hosted on Heroku **
+**Now it is hosted on railway.app**
 - Added more articles from the following sources:
     - [The Verge](https://www.theverge.com/)
     - [Dev.to](https://dev.to/)
