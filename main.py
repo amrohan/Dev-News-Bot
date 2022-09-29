@@ -297,10 +297,10 @@ if __name__ == '__main__':
 
     # Run the bot
     # Use polling command while local development or Use this command when you dont want to use webhooks
-    # updater.start_polling(1.0)
+    updater.start_polling(1.0)
 
     # using webhook so that we can run the bot in heroku without having wasting of resources
-    updater.start_webhook(listen="0.0.0.0", port=PORT,
+    #updater.start_webhook(listen="0.0.0.0", port=PORT,
                           url_path=TOKEN, webhook_url=APP_NAME + TOKEN)
     # Idle state give bot time to go in idle
     updater.idle()
