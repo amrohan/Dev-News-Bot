@@ -177,7 +177,7 @@ def echoJs(update, context):
 
 def socials(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="List of Socails are down below:\n {Github} https://github.com/amrohan\n\n {Twitter} https://twitter.com/rohansalunkhe_\n\n {Instagram} https://www.instagram.com/amrohann\n\n {Email} amrohanx@gmail.com")
+                             text="List of Socails are down below:\n {Github} https://github.com/amrohan\n\n {Twitter} https://twitter.com/amrohxn\n\n {Instagram} https://www.instagram.com/amrohxn\n\n {Email} amrohan@duck.com")
 
 
 def source_code(update, context):
